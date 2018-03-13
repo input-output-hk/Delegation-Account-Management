@@ -1,47 +1,58 @@
 \section{Account structure}\label{sec:account}
 
-An account is composed by a set of attributes, represented by an address, managed by a set of private keys and incorporates a set of functionalities. These functionalities include spending money that are held by the account and taking part in Proof-of-Stake protocol-related actions. An account consists of multiple attributes that pertain to and are used on different functionalities and are organized in a tree, the root of which is the core identifier of the account.
- 
-DEFINE ATTRIBUTES.  $T_1, T_2, \ldots, T_m$
-
-$f: T_1 \times \ldots \times T_m \rightarrow A$.
-
 \subsection{Definitions}
 
-\begin{defn}[Account keyset]\label{def:keyset}
-The account key pair $K$ is a tuple of two keys, the payment key $K^p$ and the staking key $K^s$.
+\begin{defn}[Account]\label{def:account}
+An account $\zeta$ is a list of properties that defines the owner of an asset $\theta$ in the ledger.
 \end{defn}
 
-$K^p$ is used for payment transactions, i.e. transferring the coins that are held by the account to a different account. $K^s$ is used for taking part in the Proof-of-Stake protocol, either as a committee member or a slot leader. $K^s$ can be also used for delegating the stake to a different staking key.
+Specifically an account is composed by a set of attributes, represented by an address and incorporates a set of functions that apply on the assets that it owns. These functions include moving an asset to a different account, i.e. \textbf{payment}, or taking part in Proof-of-Stake protocol-related actions as the rightful asset owner, i.e. \textbf{staking}.
+
+\begin{defn}[Account attribute]\label{def:attribute}
+An attribute $\delta$ is a string $\delta \in \Delta, \Delta \subseteq \{0, 1\}^\kappa$ that identifies a property of the account.
+\end{defn}
+
+An example of an account attribute is the payment key $K^p$. Specifically, $\delta = K^p$, $\Delta$ is the range of the key generation function and the account property that $K^p$ identifies is \textit{the ability to spend the assets in the account}.
+
+\begin{defn}[Account attribute list]\label{def:attributelist}
+The account attribute list $\mathcal{D}$ is the list of all attributes $\mathcal{D} = [{\delta}_1 \in {\Delta}_1, {\delta}_2 \in {\Delta}_2, \ldots, {\delta}_m \in {\Delta}_m]$ of an account. For any two accounts ${\zeta}_1, {\zeta}_2$ with attribute lists ${\mathcal{D}}_1, {\mathcal{D}}_2$ respectively it holds: ${\mathcal{D}}_1 = {\mathcal{D}}_2 \iff {\zeta}_1 \equiv {\zeta}_2$.
+\end{defn}
 
 \begin{defn}[Account address]\label{def:address}
-The address of an account is a string $\alpha \in \{0, 1\}^\mu$.
+The address $\alpha$ of an account $\zeta$ is a string $\alpha \in \{0, 1\}^\mu$ that uniquely represents $\zeta$.
 \end{defn}
 
-$\alpha$ is a string that represents an account and can be used to extract information about it. Such information might be public or might be used in conjuction with other data in order to verify the actions that the owner of the account takes. A primary example of such data is the hash of the payment key. This hash is used when creating the address and it becomes public when the balance is spent. An account's address must correspond to all attributes of the account, so that a claim that an attribute is part of the account can be proved by providing a proof that it is linked to the account's address.
-
-For the rest of the paper we will use the address $\alpha$ to describe the account that is identified by $\alpha$.
+For the rest of the paper we will use the address $\alpha$ to refer to account $\zeta$.
 
 \begin{defn}[Address generation function]\label{def:addressgen}
-The address generation function $f(\cdot)$ is a function that takes as parameters a set of account attributes $T$ and outputs an address $\alpha$.
+The address generation function $f : {\Delta}_1 \times \ldots \times {\Delta}_m \rightarrow \{0, 1\}^\mu$ is a function that, given an account attribute list, outputs an address.
 \end{defn}
 
-The implementation of $f$ and the objects in $T$ depend on the specifications of the protocol. $T$ may contain data like the keyset, the index of the keyset in the context of a hierarchical wallet generation etc.
+The implementation of $f$ and the attributes in $\mathcal{D}$ depend on the specifications of the protocol.
 
-
-\begin{defn}[Hierarchical wallet tag]\label{def:hierarchical_tag}
-The hierarchical wallet tag $ht$ is a tag that is used to identify whether an address is part of a hierarchical wallet structure.
+\begin{defn}[Transaction]\label{def:transaction}
+A transaction $\tau$ is the output of any function $g$ applied on an account $\zeta$ and an asset $\theta$ in the ledger: $\tau = g(\theta, \zeta)$. $\tau$ is \textbf{valid} iff $\theta$ is owned by $\zeta$.
 \end{defn}
 
 \subsection{Account attributes}
 
-The account's attributes are the moving parts that define an individual account. All of these parts must be used to create the account's address, so that, given two addresses $\alpha, \alpha'$ where $\alpha = \alpha'$ then $T = T'$, where $T, T'$ are the attribute sets for the two accounts respectively.
+We now define some fundamental account attributes, specifically the keypair and the hierarchical wallet tag.
 
-\begin{defn}[Spending set]\label{def:spending_part}
-The spending set $S$ of an account is a set of attributes that are revealed when a transaction is created that spends from the account. The hash of the spending set is $H_s$.
+\begin{defn}[Account key pair]\label{def:keypair}
+The account key pair $K$ is a pair of keys, the payment key $K^p$ and the staking key $K^s$.
 \end{defn}
 
-We include all attributes in the spending part of the tree to avoid a spending malleability attack. In such scenario, an attacker $A$ wishes to send some money to an honest receiver $B$, so she obtains an address $\alpha$ from $B$. She is successful if she is able to change $\alpha$ and create and address $\alpha'$, so that the balance in $\alpha'$ can be spent using the same payment key that was used to create $\alpha$, whilst some other attribute of $\alpha$, e.g. the staking key, has been replaced with an adversarial one.
+$K^p$ is used for payments, i.e. transferring the coins that are held by the account to a different account. $K^s$ is used for staking, i.e. taking part in the Proof-of-Stake protocol, either as a committee member or a slot leader, or delegating the stake to a different staking key.
+
+\begin{defn}[Hierarchical wallet tag]\label{def:hierarchical_tag}
+The hierarchical wallet tag $ht$ is a string that is used to identify whether an address is part of a hierarchical wallet.
+\end{defn}
+
+\begin{defn}[Spending list]\label{def:spending_part}
+The spending list $S$ of an account is a list of attributes that are revealed when a transaction is created that spends from the account. The hash of the spending set is $H_s$.
+\end{defn}
+
+We include all attributes in the spending part of the tree to avoid a spending malleability attack. In such scenario, an attacker $A$ wishes to send some money to an honest receiver $B$, so she obtains an address $\alpha$ from $B$. She is successful if she is able to change $\alpha$ and create an address $\alpha'$, so that the balance in $\alpha'$ can be spent using the same payment key that was used to create $\alpha$, whilst some other attribute of $\alpha$, e.g. the staking key, has been replaced with an adversarial one.
 
 \subsubsection{Public attributes}
 
