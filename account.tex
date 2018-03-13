@@ -63,7 +63,7 @@ The primary example of such an attribute is the payment key $K^p$.
 
 The address of an account is the concatenation of the root of the tree that identifies the account with the public attributes of the account.
 
-We now describe the structure of the address of three types of accounts, the \textbf{base} account, the \textbf{pointer} account and the \textbf{exchange} account. These types of accounts differ on the way the stake that they hold is delegated, as well as the structure of the address that represents them.
+We now describe the structure of the address of three types of accounts, the \textbf{base} account, the \textbf{pointer} account and the \textbf{enterprise} account. These types of accounts differ on the way the stake that they hold is delegated, as well as the structure of the address that represents them.
 
 \subsubsection{Base account}\label{subsubsec:base_account_v2}
 
@@ -101,11 +101,11 @@ The attributes and the address structure of a pointer account can be seen in Fig
   \label{fig:pointer_account}
 \end{figure}
 
-\subsubsection{Enterprise account}\label{subsubsec:exchange_account_plain}
+\subsubsection{Enterprise account}\label{subsubsec:enterprise_account_plain}
 
-An exchange account is an account managed by a payment key $K^p$. The stake in this account is not delegated to any staking key and is excluded from all protocol operations, like the block creation. An exchange account is identified by the exchange identifier $\epsilon$, which is a public attribute of the account.
+An enterprise account is an account managed by a payment key $K^p$. The stake in this account is not delegated to any staking key and is excluded from all protocol operations, like the block creation. An enterprise account is identified by the enterprise identifier $\epsilon$, which is a public attribute of the account.
 
-The address structure of an exchange account can be seen in Figure \ref{fig:exchange_account_plain}.
+The address structure of an enterprise account can be seen in Figure \ref{fig:enterprise_account_plain}.
 
 \begin{figure}
   \begin{center}

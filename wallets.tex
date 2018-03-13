@@ -50,6 +50,6 @@ The staking key $K^s_P$ is stored in an online machine and is used directly for 
 
 The staking key $K^s_P$ is used to create a lightweight certificate $C_l$ that delegates to a hot staking key $K^s_{Ph}$. $K^s_P$ is stored securly offline and the stake pool uses $K^s_{Ph}$ along with $C_l$ for staking. In case $K^s_{Ph}$ is compromised, the stake pool simply creates a new lightweight certificate ${C_l}'$, with a higher counter than $C_l$, that delegates to a new hot key ${K^s_{Ph}}'$ and uses ${C_l}'$ and ${K^s_{Ph}}'$ for staking afterwords.
 
-\subsection{Exchange wallet}
+\subsection{Enterprise wallet}
 
-An exchange wallet contains only exchange accounts. Therefore, it does not stake and it simply generates and manages the accounts the same way as regular Bitcoin wallets do.
+An enterprise wallet contains only enterprise accounts. Therefore, it does not stake and it simply generates and manages the accounts the same way as regular Bitcoin wallets do.
