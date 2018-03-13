@@ -34,7 +34,7 @@ She keeps her balance in a base account $\alpha$ and creates a heavyweight certi
 
 \subsection{Changing the delegation profile}
 
-A user might want to change the delegation profile for stake that she owns. In order to do that she must post a certificate using the staking key that controls her stake. However, that requires a transaction, that contains the certificate, to be posted on the blockchain. In order to do that, the user maintains an account online, which contains a small amount of money, enough just for posting a finite number of delegation certificates. We call such account a $piggy$ account. When the user wishes to post a certificate, she creates a transaction containing the certificate and sending all money in the $piggy$ account to a new ${piggy}_2$ account.
+A user might want to change the delegation profile for stake that she owns. In order to do that she must post a certificate using the staking key that controls her stake. However, that requires a transaction, that contains the certificate, to be posted on the blockchain. In order to do that, the user maintains an account online, which contains a small amount of money, enough just for posting a finite number of delegation certificates. We call such account a $pocket$ account. When the user wishes to post a certificate, she creates a transaction containing the certificate and sending all money in the $pocket$ account to a new ${pocket}_2$ account.
 
 However, the user's stake might be spread over multiple accounts, which can be either online or offline. In that case the user can choose one of the following options, depending on the level of unlinkability she wants to maintain across her accounts and the fees she is willing to pay.
 
@@ -46,9 +46,9 @@ This scheme allows the user to change her delegation profile by paying the fees 
 
 \subsubsection{Unlinkability}
 
-Unlinkability across accounts is a problem, given the fact that posting a certificate requires a transaction. Multiple accounts that are managed by the same staking key are linked together. Apart from that, posting certificates for multiple accounts using the same $piggy$ account also links them together.
+Unlinkability across accounts is a problem, given the fact that posting a certificate requires a transaction. Multiple accounts that are managed by the same staking key are linked together. Apart from that, posting certificates for multiple accounts using the same $pocket$ account also links them together.
 
-A user that wishes to maintain the unlinkability across her accounts should use one staking key per account. Furthermore, she must use one $piggy$ account per stake account.
+A user that wishes to maintain the unlinkability across her accounts should use one staking key per account. Furthermore, she must use one $pocket$ account per stake account.
 
 \subsection{Claiming delegation rewards}
 
