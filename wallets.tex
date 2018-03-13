@@ -1,0 +1,55 @@
+\section{Wallets}
+
+In this section we describe various types of wallets and the incorporation of the various types of accounts described above in them.
+
+\subsection{Regular user wallet}
+
+A regular user wallet is the most common type of wallet. It is managed by Daedalus and exists in an online device.
+
+This wallet is bootstrapped using a $base$ account ${\alpha}_b$, the stake of which is managed by a staking key $K^s$. When the wallet creates ${\alpha}_b$ it also creates a certificate $C$, which delegates from $K^s$ to $K^s$ (itself). The user gives ${\alpha}_b$ and $C$ to the party that sends the first amount of ADA to ${\alpha}_b$, who in turn adds $C$ in that transaction's data.
+
+After the transaction is included in a block, $C$ is effectively published on the blockchain. The subsequent accounts that the wallet creates are $pointer$ accounts, that point to $C$ on the blockchain. One of these accounts is used as a $pocket$ account, for posting certificates on the blockchain. Finally, all accounts of the wallet are managed by the staking key $K^s$.
+
+When the user wishes to delegate to a stake pool $P$, which is identified by the pool staking key $K^s_P$, the wallet creates a certificate $C_d$ that delegates from $K^s$ to $K^s_P$. The user can then post $C_d$ on the blockchain using the wallet's $pocket$ account.
+
+\subsection{Offline user wallet with cold staking}
+
+An offline wallet is stored in an offline device, like an airgapped laptop or a paper. This wallet is rarely accessed, so the funds in its accounts are rarely spent. However, the user wishes to stake regularly, i.e. change the wallet's delegation profile.
+
+This wallet is bootstrapped similarly to the regular user wallet, by creating a similar $base$ account ${\alpha}_b$, a certificate $C$ and pointer accounts as described above. The user then stores the payment keys for the wallet's accounts in an offline, secure device. The staking key that manages the wallet's accounts is stored in an online device, in a device equipped with a $pocket$ account for posting certificates. However, depending on the level of security that the user wants in this case, the staking keys for the wallet are managed as follows.
+
+\subsubsection{Basic security}
+
+The staking key $K^s$ that manages the wallet's accounts is stored in an online machine. That way, the user can issue certificates using $K^s$, thus changing her delegation profile, whilst the payment keys of the wallet's account remain offline. However, in case $K^s$ is compromised, e.g. stolen from the online machine, the user needs to bring the payment keys online in order to move the funds to new accounts that are managed by a new staking key.
+
+\subsubsection{Enhanced security via a hot/cold mechanism}
+
+The user creates a certificate $C'$ that delegates from $K^s$ to a key $K^s_h$, which is also managed by the user. After $C'$ is published on the blockchain, the user stores $K^s$ offline with the payment keys and stores $K^s_h$ in an online device. At this point, $K^s_h$ can change the delegation profile of all accounts in the wallet by issuing certificates. In case $K^s_h$ is compromised, the user needs to bring online only $K^s$ and issue a new certificate $C''$ that delegates to some new hot staking key ${K^s_h}'$.
+
+\subsection{Paranoid wallet}
+
+A paranoid wallet is a wallet that maintains the best level of privacy possible via unlinking the accounts in it. Specifically, the stake in each account is managed by a unique staking key. So when the user wishes to change her delegation profile, she has to create a transaction for each account, each containing a certificate that changes the delegation profile for it. Depending on the level of security that the user wants for the wallet, this is achieved as follows.
+
+\subsubsection{Online}
+
+The wallet is stored in an online device. In that case, the wallet creates only $pointer$ accounts, that point directly to the stake pool's staking key. When she wishes to change her profile, for each account the wallet creates a new $pointer$ account, that points to the new stake pool's key, and moves the balance of each account to it.
+
+\subsubsection{Offline}
+
+The wallet's payment keys are stored in an offline device. In this case the user cannot move the balance from one account to another in order to change her profile. Therefore, the wallet creates only $base$ accounts, each managed by a unique staking key. The user then keeps the payment keys offline and the staking keys online. When she wishes to change her delegation profile, she creates a certificate for each account using its staking key and posts them on the blockchain. Finally, a fully secure paranoid wallet would use a two-tier staking mechanism with hot and cold staking keys as described in the previous section.
+
+\subsection{Stake pool wallet}
+
+A stake pool wallet does not manage payments at all, but only staking. Therefore it initially creates a staking key $K^s_P$, the public staking key that users delegate to. Depending on the level of security this key is managed as follows.
+
+\subsubsection{Basic security}
+
+The staking key $K^s_P$ is stored in an online machine and is used directly for staking. However, in case the machine is compromised, the stake pool will have to stop using it and notify the users to re-delegate to a new staking key ${K^s_P}'$ that it creates.
+
+\subsubsection{Enhanced security via a hot/cold mechanism}
+
+The staking key $K^s_P$ is used to create a lightweight certificate $C_l$ that delegates to a hot staking key $K^s_{Ph}$. $K^s_P$ is stored securly offline and the stake pool uses $K^s_{Ph}$ along with $C_l$ for staking. In case $K^s_{Ph}$ is compromised, the stake pool simply creates a new lightweight certificate ${C_l}'$, with a higher counter than $C_l$, that delegates to a new hot key ${K^s_{Ph}}'$ and uses ${C_l}'$ and ${K^s_{Ph}}'$ for staking afterwords.
+
+\subsection{Exchange wallet}
+
+An exchange wallet contains only exchange accounts. Therefore, it does not stake and it simply generates and manages the accounts the same way as regular Bitcoin wallets do.

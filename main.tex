@@ -1,0 +1,27 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage[a4paper, total={6in, 9in}]{geometry}
+
+\usepackage{graphicx,color}
+
+\usepackage{amsthm}
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{lemma}[thm]{Lemma}
+
+\title{Delegation and Account Management in Proof of Stake Ledgers}
+\author{Dimitris Karakostas}
+\date{January 2018}
+
+\begin{document}
+
+\maketitle
+
+\input{introduction}
+\input{account}
+\input{delegation}
+\input{wallets}
+
+\end{document}
