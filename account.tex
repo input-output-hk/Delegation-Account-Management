@@ -59,14 +59,6 @@ Private attributes are present only in the spending set $S$ and are revealed onl
 
 The primary example of such an attribute is the payment key $K^p$.
 
-\subsubsection{Hanging attributes}
-
-Hanging attributes are not public by default, but may become public ahead of spending. Specifically, a hanging attribute might be used in protocol-related functions that are completed by the user and not by the system automatically.
-
-A hanging attribute exists in both the spending set $S$ and a branch in the tree that defines the account. Specifically, the root of the tree that defines the account is the result of hashing $H_s$ with the hashes of all hanging attributes of the account.
-
-An example of such attribute is the staking key $K^s$.
-
 \subsection{Address structure}
 
 The address of an account is the concatenation of the root of the tree that identifies the account with the public attributes of the account.
