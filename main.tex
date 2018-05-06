@@ -1,0 +1,98 @@
+%\documentclass{article}
+\documentclass{llncs}
+
+\usepackage{float,ifthen}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+
+\usepackage{etoolbox}
+\makeatletter
+\let\llncs@addcontentsline\addcontentsline
+\patchcmd{\maketitle}{\addcontentsline}{\llncs@addcontentsline}{}{}
+\patchcmd{\maketitle}{\addcontentsline}{\llncs@addcontentsline}{}{}
+\patchcmd{\maketitle}{\addcontentsline}{\llncs@addcontentsline}{}{}
+\setcounter{tocdepth}{2}
+\makeatother
+\usepackage[hidelinks]{hyperref}
+\usepackage{bookmark}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage{amsmath}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+\usepackage{graphicx,color}
+
+%%%%%%%%%%%%%
+% For llncs - comment these lines
+%%%%%%%%%%%%%
+%\usepackage[a4paper, total={6in, 9in}]{geometry}
+%\usepackage{amsthm}
+%\theoremstyle{plain}
+%\newtheorem{lemma}[thm]{Lemma}
+%%%%%%%%%%%%%%%
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{defn}[thm]{Definition}
+
+
+
+\pagestyle{plain}
+
+%\def\showauthnotes{1}
+%\ifthenelse{\showauthnotes=1}
+%{
+\newcommand{\authnote}[2]{{ \footnotesize \bf{[#1: #2]~}}}
+\newcommand{\aggelos}[1]{\authnote{Aggelos}{#1}}
+%}
+
+
+
+\title{Delegation}
+
+
+
+\date{}
+
+%%%%%%%%%%%% Fix filliation
+\usepackage{etoolbox}
+\newcommand{\repthanks}[1]{\textsuperscript{\ref{#1}}}
+\makeatletter
+\patchcmd{\maketitle}
+  {\def\thanks}
+  {\let\repthanks\repthanksunskip\def\thanks}
+  {}{}
+\patchcmd{\@maketitle}
+  {\def\thanks}
+  {\let\repthanks\@gobble\def\thanks}
+  {}{}
+\newcommand\repthanksunskip[1]{\unskip{}}
+\makeatother
+%%%%%%%%%%%%%%%
+
+\institute{}
+\begin{document}
+
+
+
+\maketitle
+
+\begin{abstract}
+abstract
+\end{abstract}
+
+
+
+
+%---------------------REFERENCES------------
+\bibliographystyle{plain}
+%\bibliographystyle{splncs03}
+%\bibliography{additional,abbrev3,crypto_crossref}
+%\bibliography{additional}
+\bibliography{additional,abbrev0,crypto}
+%---------------------REFERENCES------------
+
+\end{document}
